@@ -5,6 +5,11 @@ const form = document.getElementById("investment-form");
 function renderProgression(event) {
 
     event.preventDefault();
+
+    if(document.querySelector(".error")) {
+        return;
+    }
+    
     //const startingAmount = Number(form['startingAmount'].value); outra forma de resolução
 
     const startingAmount = Number(document.getElementById("starting-amount").value.replace(",","."));
@@ -37,7 +42,7 @@ function validateInputs(event) {
     const grandParentElement = event.target.parentElement.parentElement;
     const inputValue = event.target.value.replace(",",".");
     
-    if(isNaN(inputValue) || Number(inputValue) <= 0) {
+    if(isNaN(inputValue) || Number(inputValue) <= 0 && !parentElement.classList.contains("error")) {
 
         const errorTextElement = document.createElement("p");
         errorTextElement.classList.add('text-red-500');
@@ -45,6 +50,10 @@ function validateInputs(event) {
 
         parentElement.classList.add('error');
         grandParentElement.appendChild(errorTextElement);
+    } else if(parentElement.classList.contains("error") && !isNaN(inputValue) && Number(inputValue) > 0) {
+        
+        parentElement.classList.remove("error");
+        grandParentElement.querySelector('p').remove();
     }
 }
 
