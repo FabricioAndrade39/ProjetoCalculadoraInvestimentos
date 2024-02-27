@@ -42,7 +42,7 @@ function validateInputs(event) {
     const grandParentElement = event.target.parentElement.parentElement;
     const inputValue = event.target.value.replace(",",".");
     
-    if(isNaN(inputValue) || Number(inputValue) <= 0 && !parentElement.classList.contains("error")) {
+    if(!parentElement.classList.contains("error") && (isNaN(inputValue) || Number(inputValue)) <= 0) {
 
         const errorTextElement = document.createElement("p");
         errorTextElement.classList.add('text-red-500');
