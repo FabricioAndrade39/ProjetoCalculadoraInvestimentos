@@ -5,6 +5,7 @@ const investmentForm = document.getElementById("investment-form");
 function renderProgression(event) {
 
     event.preventDefault();
+    //const startingAmount = Number(form['startingAmount'].value); outra forma de resolução
 
     const startingAmount = Number(document.getElementById("starting-amount").value);
     const additionalContributions = Number(document.getElementById("additional-contributions").value);
