@@ -1,6 +1,7 @@
 import { genarateReturnsArray } from "./src/investmentsGoals";
 
 const form = document.getElementById("investment-form");
+const clearFormButton = document.getElementById("clear-form");
 
 function renderProgression(event) {
 
@@ -32,6 +33,22 @@ function renderProgression(event) {
     console.log(returnArrays);
 }
 
+function clearForm() {
+    
+    form['starting-amount'].value = "";
+    form['additional-contributions'].value = "";
+    form['time-amount'].value = "";
+    form['return-rate'].value = "";
+    form['tax-rate'].value = "";
+
+    const errorInputContainers = document.querySelectorAll(".error");
+
+    for(const errorInputContainer of errorInputContainers) {
+        errorInputContainer.classList.remove('error');
+        errorInputContainer.parentElement.querySelector('p').remove();
+    }
+}
+
 function validateInputs(event) {
     
     if(event.target.value === '') {
@@ -42,7 +59,7 @@ function validateInputs(event) {
     const grandParentElement = event.target.parentElement.parentElement;
     const inputValue = event.target.value.replace(",",".");
     
-    if(!parentElement.classList.contains("error") && (isNaN(inputValue) || Number(inputValue)) <= 0) {
+    if(!parentElement.classList.contains("error") && (isNaN(inputValue) || Number(inputValue) <= 0)) {
 
         const errorTextElement = document.createElement("p");
         errorTextElement.classList.add('text-red-500');
@@ -64,3 +81,4 @@ for(const formElement of form) {
 }
 
 form.addEventListener("submit", renderProgression);
+clearFormButton.addEventListener("click", clearForm);
