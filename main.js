@@ -6,6 +6,9 @@ const progression = document.getElementById("progression");
 const form = document.getElementById("investment-form");
 const clearFormButton = document.getElementById("clear-form");
 
+let doughnutChartReference = {};
+let progressionChartReference = {};
+
 function formatCurrency(value) {
     return value.toFixed(2);
 }
@@ -17,6 +20,8 @@ function renderProgression(event) {
     if(document.querySelector(".error")) {
         return;
     }
+
+    resetCharts();
     
     //const startingAmount = Number(form['startingAmount'].value); outra forma de resolução
 
@@ -39,7 +44,7 @@ function renderProgression(event) {
 
     const finalInvestmentObject = (returnArrays[returnArrays.length -1]);
 
-    new Chart(finalMoneyChat, {
+    doughnutChartReference = new Chart(finalMoneyChat, {
         type: 'doughnut',
         data: {
             labels: [
@@ -64,7 +69,7 @@ function renderProgression(event) {
           },
     });
 
-    new Chart(progression, {
+    progressionChartReference = new Chart(progression, {
         type: 'bar',
         data: {
             labels: returnArrays.map((finalInvestmentObject) => finalInvestmentObject.month),
@@ -92,6 +97,17 @@ function renderProgression(event) {
     });
 }
 
+function isObjectEmpty(obj) {
+    return Object.keys(obj).length === 0;
+}
+
+function resetCharts() {
+    if(!isObjectEmpty(doughnutChartReference) && !isObjectEmpty(progressionChartReference)) {
+        doughnutChartReference.destroy();
+        progressionChartReference.destroy();
+    }
+}
+
 function clearForm() {
     
     form['starting-amount'].value = "";
@@ -99,6 +115,8 @@ function clearForm() {
     form['time-amount'].value = "";
     form['return-rate'].value = "";
     form['tax-rate'].value = "";
+
+    resetCharts();
 
     const errorInputContainers = document.querySelectorAll(".error");
 
